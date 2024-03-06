@@ -1,0 +1,124 @@
+---
+title: 双指针
+date: 2023-09-10 12:00:00
+tags: [数据结构, 算法]
+categories: [数据结构与算法]
+---
+
+**核心思想**：使用双指针扫描两个（两部分）序列，将朴素算法（两层循环）`O(N^2)`优化到`O(N)`
+
+**一般解题思路**：先思考暴力解法，再向双指针的方向优化
+
+<!--more-->
+
+## 标准模板
+
+1. 双指针指向两个序列（如归并）
+2. 双指针指向一个序列（如快排）
+
+```cpp
+// 双指针通用模板
+for(i = 0, j = 0; i < n; i++)	// j 也可能从其他位置开始
+{
+    // 每次移动 i 指针时，考虑更新 j 指针
+    while(j < i && check(i, j))
+        j++;
+    
+    // 题目具体逻辑
+}
+```
+
+## 例题-思考过程
+
+**题目**：[799. 最长连续不重复子序列](https://www.acwing.com/problem/content/801/)
+
+```cpp
+// 思考过程
+// 朴素做法（暴力解法）：O(n^2)
+for(int i = 0; i < n; i++)
+    for(int j = 0; j < n; j++)
+        if(check(j, i))
+        	res = max(res, i - j + 1);
+
+// 双指针算法
+// 以 i 指针遍历序列，区间[j,i]内的元素表示最大不重复子序列
+// 即以 i 为右边界，找“离 j 最远的 i”，就是最大不重复子序列
+// 当遇到重复时，更新 j = i
+for(int i = 0, j = 0; i < n; i++)
+{
+    while(j <= i && check(j, i))	
+        j++;
+    res = max(res, i - j + 1);
+}
+```
+
+```cpp
+// 处理重复元素的思路：空间换时间（数据不是很大时适用）
+#include <iostream>
+using namespace std;
+const int N = 1e5 + 10;
+int a[N], s[N];
+int n;
+int main(void)
+{
+    cin >> n;
+    for(int i = 0; i < n; i++)	scanf("%d", &a[i]);
+    int res = 1；	
+    
+    // 双指针：i 指针遍历数组，同时用 j 指针指向距离 i 最远的不重复子数组
+    for(int i = 0, j = 0; i < n; i++)
+    {
+        // 开辟数组 s，存放 i 位置数字 a[i] 出现的次数
+        s[a[i]]++;
+        
+        // 当元素 a[i] 重复（j一定小于i，省略判断）
+        while(s[a[i]] > 1)	
+        { 
+            // j 从当前位置开始移动，同时删除从当前位置到与a[i]重复的位置之间的元素出现次数
+            // 直到区间[j,i]内不包含重复元素停止
+            s[a[j]]--;		
+            j++;
+        }
+        
+        // 记录从 i 到 j 之间的最大距离，即最大不重复子数组的长度
+        res = max(res, i - j + 1);
+    }
+    
+    cout << res << endl;
+    return 0;
+}
+```
+
+**题目**：[66. 两个链表的第一个公共结点](https://www.acwing.com/problem/content/62/)
+
+- 双指针遍历双链表相同长度后相遇 [思路题解](https://www.acwing.com/solution/content/26708/)
+
+## 题目补充
+
+[LeetCode：无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/?envType=study-plan-v2&envId=top-100-liked)
+
+1. 同样是利用数组记录（处理）重复元素
+2. 条件“英文字母、数字、符号和空格组成”表示`ascii`前`128`个，只需开大小为`128`的数组即可
+3. 后续掌握哈希/桶等精进算法
+
+[LeetCode：移动零](https://leetcode.cn/problems/move-zeroes/)
+
+1. 利用快慢指针解决问题
+2. 快指针遍历整个数组
+3. 慢指针指向 0 序列的第一个 0，该位置之前是维护好的非零序列
+
+[LeetCode: 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/solutions/811625/xiang-jiao-lian-biao-by-leetcode-solutio-a8jn/?envType=study-plan-v2&envId=top-100-liked)
+
+1. 链表A长度`a + c = m`，链表B长度`b + c = n`
+2. 双指针分别遍历双链表，遍历后从另一个链表头节点重新开始遍历
+3. 最终双指针遍历长度`a + c + b = b + c + a`（有相交区域时），即此时指向相交节点
+
+
+
+
+
+## 参考
+
+[算法基础课模板](https://www.acwing.com/blog/content/277/)
+
+[算法基础课](https://www.acwing.com/activity/content/introduction/11/)

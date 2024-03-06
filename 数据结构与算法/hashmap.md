@@ -1,0 +1,267 @@
+---
+title: 哈希表
+date: 2023-11-10 12:00:00
+tags: [数据结构, 算法]
+categories: [数据结构与算法]
+---
+
+> 哈希表用于把一个庞大的数据结构（空间/值域）映射到较小的空间/值域（0-n），`0-1e9 -> 0-1e5`
+>
+> （用较小的索引检索到较大值域内的值）
+
+<!--more-->
+
+1. 存储结构
+    1. 开放寻址法
+    2. 拉链法
+2. 字符串哈希方式
+
+（离散化是一种及其特殊的哈希方式，需要保序单调递增）
+
+[Acwing: 模拟散列表](https://www.acwing.com/problem/content/842/)
+
+冲突：可能会把若干个数映射为同一个数
+
+处理冲突：都比较常用
+
+1. 开放寻址法
+2. 拉链法：开一维数组存储所有的哈希值，
+
+![image-20240229131101527](/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240229131101527.png)	哈希表是一种期望算法，链的长度视为长度，一般可近似为O(1)
+
+常用操作：1. 插入	2. 查找（一般不涉及删除，删除可以开数组标记被删掉的元素，表示被删掉，但实际不删掉）
+
+```cpp
+// 映射：取模的数一般取一个质数（冲突概率小一点） 
+// 求大于1e5的质数
+for(int i = 100000; ; i++) {
+    bool flag = true;
+    for(int j = 2; j * j <= i; j++)
+        if(i % j == 0) {
+            flag = false;
+            break;
+        }
+
+    if(flag) {
+        cout << i << endl;
+        break;
+    }
+}
+// >> 100003，即选为模数
+```
+
+
+
+```cpp
+// 拉链法
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+// 选取大于指定长度的最小质数
+const int N = 1e5 + 3;
+
+int h[N];           // 哈希槽
+int ne[N], e[N];    // 拉链的链表
+int idx;            // 当前用到的位置
+
+void insert(int x) {
+    // x % N 余数可能是负数
+    // + N 变余数为正数
+    int k = (x % N + N) % N;
+    
+    // 单链表插入操作
+    e[idx] = x;
+    ne[idx] = h[k];
+    h[k] = idx ++;
+}
+
+bool find(int x) {
+    int k = (x % N + N) % N;
+    for(int i = h[k]; i != -1; i = ne[i]) {
+        if(e[i] == x)
+            return true;
+    }
+    return false;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    
+    // 将槽清空（单链表空指针用-1表示）
+    memset(h, -1, sizeof h);
+    
+    while(n--) {
+        char op;
+        int x;
+        cin >> op >> x;
+        if(op == 'I') {
+            insert(x);
+        } else {
+            if(find(x))
+                puts("Yes");
+            else
+                puts("No");
+        }
+    }
+    
+    return 0;
+}
+```
+
+#### 开放寻址法
+
+- 开到数组的2-3倍
+- 从第k个位置，找到下一个没有存放元素的位置，插入冲突的元素【插入】
+- 从第k个位置开始，遍历查找到指定值【查找】
+- 数组标记查找的值，伪删除【删除】
+
+```cpp
+// 开放寻址法
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+// 选取质数
+const int N = 200003;
+
+// 初始化为范围之外的值
+const int null = 0x3f3f3f3f;
+
+int h[N];
+
+// 不冲突，返回他的位置
+// 冲突，返回它应该存储的位置
+int find(int x) {
+    int k = (x % N + N) % N;
+    
+    while(h[k] != null && h[k] != x) {
+        k++;
+        // 超出哈希表范围，返回应该存储的位置（接在表的后面）
+        if(k == N)
+            k = 0;
+    }
+    
+    return k;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    
+    // 将哈希表初始化
+    // 按字节，int 4个字节，相当于0x3f3f3f3f（4个）
+    // 最大值设置：INT_MAX vs 0x3f3f3f3f
+    memset(h, 0x3f, sizeof h);
+    
+    while(n--) { 
+        char op;
+        int x;
+        cin >> op >> x;
+        int k = find(x);
+        if(op == 'I')
+            h[k] = x;
+        else {
+            if(h[k] != null)
+                puts("Yes");
+            else
+                puts("No");
+        }
+    }
+    
+    return 0;
+}
+```
+
+
+
+## 字符串哈希
+
+> 字符串前缀哈希法
+
+<img src="/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240229165144226.png" alt="image-20240229165144226" style="zoom:50%;" />
+
+1. 预处理所有前缀的哈希
+2. 定义哈希值：
+    1. 字符串看做P进制的数
+    2. 将字符串转化为一个数字
+
+<img src="/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240229170929674.png" alt="image-20240229170929674" style="zoom:50%;" />
+
+把字符串映射为0 - Q-1的数
+
+- 不要把字母映射为0
+- 不考虑冲突的情况（经验：p=131或p=13331，q=2^64）
+
+可以利用前缀的哈希，得到所有子串的哈希值
+
+```cpp
+h[R];	// p^R-1 ... p^0
+h[L-1];	// p^L-2 ... p^0
+// 对齐
+h[R] - h[L-1] * p^(R-L+1);	// 一段字符串的哈希值
+```
+
+用`unsigned long long`存储哈希值，溢出即是`mod 2^64`
+
+快速判断：字符串的两个子串是否相同`O(1)`
+
+[Acwing: 字符串哈希](https://www.acwing.com/problem/content/843/)
+
+```cpp
+#include <iostream>
+using namespace std;
+
+const int N = 1e5 + 10;
+const int P = 131;  // 经验：取131或13331
+
+// 设置 Q = 2^64
+typedef unsigned long long ULL;
+
+int n, m;
+char str[N];
+
+// h存放哈希值，p记录h[i]对应的最高位是p的几次幂
+ULL h[N], p[N];
+
+ULL get(int l, int r) {
+    return h[r] - h[l - 1] * p[r - l + 1];
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m >> str + 1;
+    
+    p[0] = 1;
+    
+    for(int i = 1; i <= n; i++) {
+        p[i] = p[i - 1] * P;        
+        h[i] = h[i - 1] * P + str[i];   // 需要保证str[i] != 0
+    }
+    
+    while(m--) {
+        int l1, r1, l2, r2;
+        cin >> l1 >> r1 >> l2 >> r2;
+        
+        if(get(l1, r1) == get(l2, r2))
+            puts("Yes");
+        else
+            puts("No");
+    }
+    
+    return 0;
+}
+```
+
+
+
+kmp唯一相对优势：kmp求循环节
+
+
+
+## 参考
+

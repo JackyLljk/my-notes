@@ -1,0 +1,270 @@
+---
+title: DFS | BFS
+date: 2023-12-8 12:00:00
+tags: [数据结构, 算法]
+categories: [数据结构与算法]
+
+---
+
+> 
+
+<!--more-->
+
+## DFS 深度优先搜索
+
+### 基本性质
+
+- 优先向深度搜索，搜索到叶节点回溯，确定当前节点没有子节点，继续回溯
+- （数据结构）用栈
+- （空间）与高度成正比 O(h)
+- 不具有最短性
+- 重要概念：1. 回溯   2. 剪枝
+- 算法思路比较奇怪？对空间要求比较高？
+- 暴搜
+
+<img src="/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240305090745621.png" alt="image-20240305090745621" style="zoom:50%;" />
+
+### 例题理解
+
+> 每个DFS都对应一棵搜索树，最重要考虑顺序
+
+#### [Acwing: 排列数字（全排列）](https://www.acwing.com/problem/content/844/)
+
+![image-20240305092516995](/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240305092516995.png)
+
+（每次只会存储一条路径，不需要把整个树写出来，属于递归思路的一种）
+
+- 回溯：注意恢复现场
+
+```cpp
+#include <iostream>
+using namespace std;
+const int N = 10;
+
+int n;
+int path[N];    // 存储当前层存储的数字
+bool st[N];     // 记录当前数字有没有被用到 state[i]
+
+void dfs(int u) {
+    // 搜索到底，所有位置填满，输出结果，返回，开始回溯
+    if(u == n) {
+        // 从第0层开始，即 u = 1，输出该条路径上存储的所有数字
+        for(int i = 0; i < n; i++) {
+            cout << path[i] << " ";    // 输出路径上的数字
+        }   
+        puts("");
+        return;
+    }
+    
+    // 没有搜索到底，存入数字到没用过的位置，状态标为用过
+    for(int i = 1; i <= n; i++) {
+        // 当前位置没有被用到
+        if(!st[i]) {
+            // 记录当前第 u 层存的数字 i，和数字 i 被用过的状态
+            path[u] = i;
+            st[i] = true;
+            // 递归搜索下一层，搜索到叶节点，开始回溯
+            // u == 0/1/2.../n 时，对应着搜索到第 0/1/2.../n 层
+            dfs(u + 1); 
+            
+            // 回溯：恢复现场
+            // 省略了一步恢复 path[u] = 0
+            st[i] = false;
+        }
+    }
+}
+
+int main() {
+    cin >> n;
+    // 从第 0 层开始深度搜索
+    dfs(0);
+    return 0;
+}
+```
+
+
+
+#### [Acwing: n-皇后问题](https://www.acwing.com/problem/content/845/)
+
+> 注意**剪枝**，提前判断当前节点继续深度搜索不合法，直接回溯
+
+- 任意两个皇后，不能在同行、同列、同对角线上
+
+对角线`y = -x + b, 截距 b = y + x`
+
+反对角线坐标`y = x + b上，截距 b = y - x, 加偏移量保证非负即 b = y - x + n`
+
+**思路1：转化为全排列问题，根据条件剪枝	O(N*N!)**
+
+- 全排列的思想，逐行确定一个皇后的位置，到最后一行时返回
+- 类似于排列中在每行摆一个不同的数字
+
+```cpp
+#include <iostream>
+using namespace std;
+const int N = 10;
+
+int n;
+char res[N][N];    // 存储方案
+
+// 记录当前列、对角线、反对角线是否被用到
+bool col[N];    // 列 y = b，col[y]
+bool dg[N];     // 正对角线 y = x + b，dg[n + y - x]
+bool udg[N];    // 反对角线 y = -x + b, udg[x + y]
+
+
+void dfs(int u) {
+    if(u == n) {
+        for (int i = 0; i < n; i++)
+            puts(res[i]);
+        puts("");
+        return;
+    }
+    
+    for (int i = 0; i < n; i++) {
+        // u是横坐标，i是纵坐标，定值"b"对应一条对角线
+        // 相同坐标系对角线上不能有两个皇后
+        // 满足条件的继续递归，否则直接下一次循环
+        if(!col[i] && !dg[u + i] && !udg[n - u + i]) {
+            res[u][i] = 'Q';
+            col[i] = dg[u + i] = udg[n - u + i] = true;
+            dfs(u + 1);
+            col[i] = dg[u + i] = udg[n - u + i] = false;
+            res[u][i] = '.';
+        }
+    }
+}
+
+int main() {
+    cin >> n;
+    
+    // 所有位置初始化
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            res[i][j] = '.';
+    
+    dfs(0);
+    
+    return 0;
+}
+```
+
+
+
+**思路2：枚举每个位置，剪枝进行化简	O(2^N^2)**	
+
+- 从`(0, 0)`枚举，每个位置分为”放皇后“和”不放皇后“两种路径
+- 每次搜索到第N行，即深度最大，返回可能的结果
+
+```cpp
+#include <iostream>
+using namespace std;
+const int N = 10;
+char res[N][N];
+int n;
+
+// 行、列、对角线、反对角线状态
+bool row[N], col[N], dg[N], udg[N];
+
+// 搜索的位置 (x,y)，当前已经有的皇后数 s
+void dfs(int x, int y, int s) {
+    // 枚举到最后一列，则转到下一行的第一列
+    if (y == n) {
+        y = 0;  
+        x++;
+    }
+    
+    // 枚举到最后一行，输出方案结果
+    if (x == n) {
+        // 已摆够皇后数
+        if(s == n) {
+            for (int i = 0; i < n; i++) 
+                puts(res[i]);
+            puts("");
+        }
+        return;
+    }
+    
+    // 不放皇后，枚举下一个位置
+    dfs(x, y + 1, s);
+    
+    // 放皇后（通过判断条件进行剪枝）
+    if (!row[x] && !col[y] && !dg[x + y] && !udg[n - x + y]) {
+        res[x][y] = 'Q';
+        row[x] = col[y] = dg[x + y] = udg[n - x + y] = true;
+        dfs(x, y + 1, s + 1);
+        // 回溯，恢复状态和值
+        row[x] = col[y] = dg[x + y] = udg[n - x + y] = false;
+        res[x][y] = '.';
+    }
+}
+
+int main() {
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            res[i][j] = '.';
+    
+    dfs(0, 0, 0);
+    return 0;
+}
+```
+
+
+
+
+
+## BFS 宽度优先搜索
+
+- 每次搜索先搜索本层的所有节点，之后再搜索下一层，每次只扩展一层
+- 用队列
+- （空间）O(2^h)
+    - （以二叉树为例，二叉树第h层是2^h - 1个节点，第n层有2^n个节点）（复习一下）
+- 有最短路的性质（最小步数、最短距离、最少操作次数）【优势】
+
+<img src="/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240305091315595.png" alt="image-20240305091315595" style="zoom:50%;" />
+
+- 搜到的是最短路
+
+<img src="/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240305091426741.png" alt="image-20240305091426741" style="zoom:50%;" />
+
+（左下角节点搜索结果为第二层，权重为2，即存在最短路特性）
+
+> 只有当所有边的权重相同时，才能用BFS求最短路径
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
