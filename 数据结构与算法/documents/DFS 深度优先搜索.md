@@ -8,9 +8,9 @@
 
 **对比 BFS**：不具有最短路特性
 
-​	<img src="./assets/image-20240306212737679.png" alt="image-20240306212737679" style="zoom:50%;" />
+![image-20240307130325526](./assets/image-20240307130325526.png)
 
-
+   
 
 ## 经典题目理解
 
@@ -70,7 +70,7 @@ int main() {
 }
 ```
 
-
+   
 
 ### [Acwing: n-皇后问题](https://www.acwing.com/problem/content/845/)
 
@@ -83,7 +83,7 @@ int main() {
 - 反对角线 `y = x + b上，截距 b = y - x, 加偏移量保证非负即 b = y - x + n`
 - 存储对角线使用状态的数组，实际上存储的是截距`b`
 
-
+   
 
 #### **思路1：转化为全排列问题，根据条件剪枝	O(N*N!)**
 
@@ -140,7 +140,7 @@ int main() {
 }
 ```
 
-
+   
 
 #### **思路2：枚举每个位置，剪枝进行化简	O(2^N^2)**	
 
@@ -203,37 +203,7 @@ int main() {
 
 
 
-
-
-## BFS 宽度优先搜索
-
-- 每次搜索先搜索本层的所有节点，之后再搜索下一层，每次只扩展一层
-- 用队列
-- （空间）O(2^h)
-    - （以二叉树为例，二叉树第h层是2^h - 1个节点，第n层有2^n个节点）（复习一下）
-- 有最短路的性质（最小步数、最短距离、最少操作次数）【优势】
-
-<img src="/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240305091315595.png" alt="image-20240305091315595" style="zoom:50%;" />
-
-- 搜到的是最短路
-
-<img src="/Users/jk/Desktop/Coding/myblog/source/_posts/algo/assets/image-20240305091426741.png" alt="image-20240305091426741" style="zoom:50%;" />
-
-（左下角节点搜索结果为第二层，权重为2，即存在最短路特性）
-
-> 只有当所有边的权重相同时，才能用BFS求最短路径
-
-
-
-
-
-
-
-
-
-
-
-
+## 习题补充
 
 
 
