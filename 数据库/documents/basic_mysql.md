@@ -241,13 +241,7 @@ ROLLBACK;
 
 `ACID` 事务具有原子性（Atomicity）、一致性（Consistency)、隔离性（Isolation）、持久性（Durability）四个标准属性
 
-   
-
-   
-
-   
-
-   
+<br>   
 
 ## 其他补充
 
@@ -258,7 +252,13 @@ ROLLBACK;
 3. 可信赖
 4. 简单：容易安装和使用
 
-   
+   <br>
+
+<br>
+
+<br>
+
+<br>
 
 #### 默认端口：3306
 
