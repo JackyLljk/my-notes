@@ -1,7 +1,5 @@
 > 使用 MySQL 的常用命令和部分知识点补充
 
-<!--more-->
-
 ## 命令行使用MySQL
 
 ```shell
@@ -47,6 +45,8 @@ SHOW GRANTS;
 SHOW ERRORS;	 
 -- 显示警告信息
 SHOW WARNINGS;	
+-- 查看创建视图的语句
+SHOW CREATE VIEW view_name;
 ```
 
    
@@ -195,6 +195,12 @@ SELECT col1 AS c1, col2 AS c2
 -- 内联结，或使用 WHERE 方式内联结
 SELECT col1, col2
 	FROM table1 INNER JOIN tabel2;
+	
+-- 创建视图
+CREATE VIEW view_name AS
+	# 查询语句
+-- 删除视图
+DROP VIEW view_name;
 ```
 
    
@@ -237,6 +243,12 @@ ROLLBACK;
 
    
 
+   
+
+   
+
+   
+
 ## 其他补充
 
 #### MySQL 优点
@@ -263,9 +275,16 @@ ROLLBACK;
 
    
 
+### 临时记录
 
+视图不包含任何数据，包含一个SQL查询
 
+利用视图一次性编写基础SQL语句，可化简复杂的SQL查询语句
 
+存储过程：一条或多条MySQL语句的集合
+
+- 使用存储过程比使用单独的SQL语句快
+- MySQL将编写存储过程的安全和访问，与执行存储过程的安全和访问区分开来
 
 
 
