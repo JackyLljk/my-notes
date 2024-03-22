@@ -1,16 +1,26 @@
 ## 笔记目录
 
-### Golang 理解
+![image-20240323023255161](../static/image-20240323023255161.png)
 
+## Golang 理解
 
+### 记录
 
+[简答和疑问](./document/tips_questions.md)
 
+### 数据容器
 
+[数组与切片](./document/array_slice.md)
 
+[map 哈希表](./document/map.md)
 
+[接口与反射](./document/interface_reflect.md)
 
+[goroutine 和 channel](./document/channel_goroutine.md)
 
+### 标准库
 
+### 语言特性
 
 
 
