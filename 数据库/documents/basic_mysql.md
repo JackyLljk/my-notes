@@ -18,7 +18,7 @@ mysql> exit
 # control + d
 ```
 
-   
+   <br>
 
 ## MySQL 命令
 
@@ -49,7 +49,7 @@ SHOW WARNINGS;
 SHOW CREATE VIEW view_name;
 ```
 
-   
+   <br>
 
 ### CREATE 创建表
 
@@ -78,7 +78,7 @@ DATETIME 时间
 -- ENGINE=InnoDB 指定表使用的引擎
 ```
 
-   
+   <br>
 
 ### DROP/ALTER 删除/更新表
 
@@ -96,7 +96,7 @@ ALTER TABLE old_tab RENAME TO new_tab
 ALTER TABLE tab_name RENAME COLUMN old_col TO new_col
 ```
 
-   
+   <br>
 
 ### INSERT 新增记录
 
@@ -114,7 +114,7 @@ INSERT INTO tab_name (col1, col2, col3) VALUES
     (xx, xx, xx);
 ```
 
-   
+   <br>
 
 ### DELETE/UPDATE 删除/更新记录
 
@@ -131,7 +131,7 @@ UPDATE tab_name
     WHERE [ conditions ]
 ```
 
-   
+   <br>
 
 ### SELECT 查询
 
@@ -183,7 +183,7 @@ SELECT * FROM table_name
 -- SELECT 子句顺序：SELECT - FROM - WHERE - GROUP BY - HAVING - ORDER BY - LIMIT
 ```
 
-   
+   <br>
 
 ### 其他
 
@@ -203,23 +203,24 @@ CREATE VIEW view_name AS
 DROP VIEW view_name;
 ```
 
-   
+<br>
 
 ### Transaction 事务
 
 ```sql
 -- 提交
-BEGIN;
+START TRANSACTION;
 INSERT INTO ...
 ...
-COMMIT; 
+COMMIT;
+
 -- 回滚
-BEGIN;
+START TRANSACTION;
 ...
 ROLLBACK;
 ```
 
-   
+   <br>
 
 ## 基本概念名词
 
@@ -241,7 +242,9 @@ ROLLBACK;
 
 `ACID` 事务具有原子性（Atomicity）、一致性（Consistency)、隔离性（Isolation）、持久性（Durability）四个标准属性
 
-<br>   
+`事务 transaction` 一组SQL语句
+
+<br>
 
 ## 其他补充
 
@@ -252,19 +255,13 @@ ROLLBACK;
 3. 可信赖
 4. 简单：容易安装和使用
 
-   <br>
-
-<br>
-
-<br>
-
 <br>
 
 #### 默认端口：3306
 
 - 查看端口：`SHOW GLOBAL VARIABLES LIKE 'port'`
 
-   
+   <br>
 
 #### 创建不同表可以指定不同的引擎
 
@@ -273,7 +270,7 @@ ROLLBACK;
 - `MyISAM` 高性能，支持全文本搜索，不支持事务处理
 - 注意：外键不能跨引擎 
 
-   
+<br>
 
 ### 临时记录
 
@@ -285,6 +282,18 @@ ROLLBACK;
 
 - 使用存储过程比使用单独的SQL语句快
 - MySQL将编写存储过程的安全和访问，与执行存储过程的安全和访问区分开来
+
+MySQL游标只能用于存储过程和函数，是select语句的结果集
+
+触发器：关联表，在执行`DELETE/INSRT/UPDATE`操作之前或之后执行
+
+事务处理是一种机制，用来管理必须成批执行的mysql操作，以保证数据库不包含不完整的操作结果
+
+事务处理块中，提交不会隐含地进行。
+
+
+
+
 
 
 
