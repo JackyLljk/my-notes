@@ -1,20 +1,50 @@
 ## 笔记目录
 
-### 数据结构与算法
+## 语法
 
-**语法**：[面向算法的CPP语法](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%9D%A2%E5%90%91%E7%AE%97%E6%B3%95%E7%9A%84CPP%E8%AF%AD%E6%B3%95.md)，[面向算法的Golang语法](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%9D%A2%E5%90%91%E7%AE%97%E6%B3%95%E7%9A%84Golang%E8%AF%AD%E6%B3%95.md)
+[面向算法的CPP语法](./documents/面向算法的CPP语法.md)
 
-**基本算法**：[排序](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F.md)，[二分法](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86%E6%B3%95.md)，[双指针](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95.md)
+[面向算法的Golang语法](./documents/面向算法的Golang语法.md)
 
-**数组**：[前缀和与差分](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%8D%E7%BC%80%E5%92%8C%E5%92%8C%E5%B7%AE%E5%88%86.md)，[单调栈和单调队列]()，[离散化与区间合并](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%A6%BB%E6%95%A3%E5%8C%96%E5%92%8C%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6.md)
+## Acwing 算法模板笔记
 
-**手搓**：[数组模拟：链表 | 栈 | 队列](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%20%7C%20%E6%A0%88%20%7C%20%E9%98%9F%E5%88%97.md)，[堆](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%A0%86.md)，[哈希表](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%93%88%E5%B8%8C%E8%A1%A8.md)
+[排序](./documents/排序.md)
 
-**搜索**：[并查集](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%B9%B6%E6%9F%A5%E9%9B%86.md)，[DFS](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/DFS%20%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2.md)，
+[二分法](./documents/二分法.md)
 
-**字符串处理**：[KMP](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/kmp.md)，[Tire 树](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/Tire%E6%A0%91.md)
+[双指针](./documents/双指针算法.md)
 
-**数字处理**：[高精度](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%AB%98%E7%B2%BE%E5%BA%A6.md)，[位运算](https://github.com/JackyLljk/my-notes/blob/main/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97.md)
+[前缀和与差分](./documents/前缀和和差分.md)
+
+[高精度](./documents/高精度.md)
+
+[位运算](./documents/位运算.md)
+
+[离散化与区间合并](./documents/离散化和区间合并.md)
+
+[数组模拟：链表 | 栈 | 队列](./documents/数组实现链表 | 栈 | 队列.md)
+
+单调栈和单调队列
+
+[KMP](./documents/kmp.md)
+
+[Tire 树](./documents/Tire树.md)
+
+[堆](./documents/堆.md)
+
+[哈希表](./documents/哈希表.md)
+
+[并查集](./documents/并查集.md)
+
+图的存储
+
+[DFS](./documents/DFS 深度优先搜索.md)
+
+[BFS](./documents/BFS & 图的存储.md)
+
+
+
+
 
 
 
