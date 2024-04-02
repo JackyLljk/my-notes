@@ -1,7 +1,6 @@
+## 1. 数组和切片的区别 
 
-## 数组与切片
-
-### 1. 数组和切片的区别 
+### 1.1 array vs slice
 
 **相同点**：存储的元素类型，下标访问、len、cap
 
@@ -15,11 +14,9 @@
 
 2. 数组是值类型，切片是引用类型，每个切片都引用了一个底层数组，切片本身不能存储任何数据，都是这底层数组存储数据，所以修改切片的时候修改的是底层数组中的数据。切片一旦扩容，指向一个新的底层数组，内存地址也就随之改变
 
-**简洁的回答**：
+<br>
 
-1. 定义方式不一样
-2. 初始化方式不一样，数组需要指定大小，大小不改变 
-3. 在函数传递中，数组切片都是值传递。
+### 1.2 slice 基本用法
 
 **数组的定义**
 
@@ -46,7 +43,7 @@ a2 := [5]int{1,2,3}
 **切片的初始化**
 
 ```go
-b:= make([]int,3,5)
+b := make([]int, 3, 5)
 ```
 
 **截取切片**
@@ -58,7 +55,7 @@ slice = arr[low:high:max]
 
 **补充**
 
-1. 数组未赋值元素默认初始值为0
+1. 数组未赋值元素默认初始值为 0
 2. 数组是一片连续的内存，切片实际上是一个结构体
 
 ```go
@@ -77,7 +74,7 @@ type slice struct {
 <br>
 
 
-### 2. slice 的扩容策略
+## 2. slice 的扩容策略
 
 ```go
 // 1.21.5 (1.18 之后的新策略)
@@ -95,18 +92,11 @@ func growslice(oldPtr unsafe.Pointer, newLen, oldCap, num int, et *_type) slice 
 		if oldCap < threshold {
 			newcap = doublecap
 		} else {
-			// Check 0 < newcap to detect overflow
-			// and prevent an infinite loop.
             // 3. 如果旧容量大于阈值，开始循环增加新容量，直到大于新长度
             // 扩增公式：newcap += (newcap + 3*threshold) / 4
 			for 0 < newcap && newcap < newLen {
-				// Transition from growing 2x for small slices
-				// to growing 1.25x for large slices. This formula
-				// gives a smooth-ish transition between the two.
 				newcap += (newcap + 3*threshold) / 4
 			}
-			// Set newcap to the requested cap when
-			// the newcap calculation overflowed.
 			if newcap <= 0 {
 				newcap = newLen
 			}
@@ -126,28 +116,20 @@ func growslice(oldPtr unsafe.Pointer, newLen, oldCap, num int, et *_type) slice 
     - 扩增公式：`newcap += (newcap + 3*threshold) / 4`
     - 扩容系数不会从`2`突变为`1.25`，当`oldcap`远大于`256`时，扩容系数取到`1.25`
 
-**第二步：内存**
+**第二步：内存分配**
 
-1. 之后根据元素的类型（cap*类型大小），对需要的内存空间进行计算，，之后对计算得到的内存进行向上取
-2. 
+- 根据元素的类型（cap*类型大小），对需要的内存空间进行计算（内存分配策略）
 
-<br>
+**补充**
 
-#### 3. golang中数组和slice作为参数的区别？slice作为参数传递有什么问题？
-
-https://blog.csdn.net/weixin_44387482/article/details/119763558
-
-1. 当使用数组作为参数和返回值的时候，传进去的是值，在函数内部对数组进行修改并不会影响原数据
-2. 当切片作为参数的时候穿进去的是值，也就是值传递，但是当我在函数里面修改切片的时候，我们发现源数据也会被修改，这是因为我们在切片的底层维护这一个匿名的数组，当我们把切片当成参数的时候，会重现创建一个切片，但是创建的这个切片和我们原来的数据是共享数据源的，所以在函数内被修改，源数据也会被修改
-3. 数组还是切片，在函数中传递的时候如果没有指定为指针传递的话，都是值传递，但是切片在传递的过程中，有着共享底层数组的风险，所以如果在函数内部进行了更改的时候，会修改到源数据，所以我们需要根据不同的需求来处理，如果我们不希望源数据被修改话的我们可以使用copy函数复制切片后再传入，如果希望源数据被修改的话我们应该使用指针传递的方式
-
-#### 4. 从数组中取一个相同大小的slice有成本吗？
-
-没有，因为容量足够的情况下，截取切片只是对底层数组的引用，而不需要额外分配内存空间
-
-
-
-
+- 可以向 nil 切片添加元素，append 会调用 mallocgc 申请一块内存
 
 <br>
 
+## 3. 切片传参问题
+
+1. Go 语言的函数传递，只有值传递，没有引用传递（指针也是传的副本）
+2. 函数参数无论是切片还是其指针，改变底层数组，都会反映在切片实参上
+    - 传值虽然是结构体的副本，但具体到底层数组，传的其实是指针
+
+<br>

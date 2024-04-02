@@ -14,23 +14,23 @@ git
 
 Linux
 
-## Golang 修炼之路
+## Go 修炼之路
 
 [Golang](https://github.com/JackyLljk/my-notes/tree/main/Golang)
 
-Golang Web
+Go Web
 
 -----(未探索区域)-----
 
-Golang 微服务?
+Go 微服务?
 
-Golang 分布式?
+Go 分布式?
 
-Golang 云原生？
+Go 云原生？
 
-Golang DevOps？
+Go DevOps？
 
-Golang 区块链？
+Go 区块链？
 
 ## 其他
 
@@ -52,7 +52,6 @@ Java
 
 # 空行
 <br>
-<p>	
 ```
 
 #### git

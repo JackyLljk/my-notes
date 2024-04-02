@@ -1,10 +1,8 @@
-## goroutine
-
 > Do not communicate by sharing memory; instead, share memory by comminicating
 >
 > 不要通过共享内存来通信，而要通过通信来实现共享内存
 
-### 1. CSP 模型
+## 1. CSP 模型
 
 **CSP**：Communicating Sequential Processes，通信顺序进程
 
@@ -15,22 +13,7 @@
 
 <br>
 
-### 2. goroutine 的使用
-
-- goroutine 是 Go 程序中最基本的并发单元
-- 每一个Go程序都至少包含一个`goroutine`，即`main goroutine`，Go 程序启动时会自动创建
-
-```go
-go f() // 创建新的goroutine执行函数f
-```
-
-- goroutine 有动态栈内存，且初始动态栈很小（`2KB`）
-
-<br>
-
-## channel
-
-### 1. channel 的应用
+## 2. channel 的应用
 
 ```go
 // 基本用法
@@ -105,9 +88,9 @@ func main() {
 
 <br>
 
-### 2. select 与通道
+## 3. select 与通道
 
-#### 非阻塞模式
+### 非阻塞模式
 
 ```go
 // select 非阻塞接收：当接收失败时，会快速检测并执行 default 语句
@@ -135,7 +118,7 @@ select {
 ch <- 42
 ```
 
-#### 多路复用
+### 多路复用
 
 ```go
 select {
@@ -156,9 +139,9 @@ select {
 
 <br>
 
-### 3. channel 底层结构
+## 4. channel 底层结构
 
-#### 数据结构
+### 数据结构
 
 ![image-20240323014526664](../../static/image-20240323014526664.png)
 
@@ -192,7 +175,7 @@ type waitq struct {
 
 <br>
 
-#### 从 channel 接收
+### 从 channel 接收
 
 根据是否带`ok`判断通道是否被关闭，分为`chanrecv1()`（不带）和`chanrecv2()`写法，但而这实际上调用了同一个函数
 
@@ -225,7 +208,7 @@ func chanrecv(c *hchan, ep unsafe.Pointer, block bool) (selected, received bool)
 
 <br>
 
-#### 向 channel 发送
+### 向 channel 发送
 
 ```go
 func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool {...}
@@ -251,7 +234,7 @@ func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool {.
 
 <br>
 
-#### 关闭通道
+### 关闭通道
 
 ```go
 func closechan(c *hchan) {...}
@@ -270,7 +253,7 @@ func closechan(c *hchan) {...}
 7. 唤醒所有`sudog`相应的 goroutine
     - 对于发送 goroutine，会直接引发 panic！
 
-**优雅地关闭通道**（场景问题）
+#### 优雅地关闭通道（场景问题）
 
 1. 只有一个 sender：从发送端关闭就好
 2. N sender 1 receiver：非阻塞模式下，设置一个传递关闭信号的 channel，该通道只有一个 sender，当该通道关闭后，直接退出不再发送数据，而原本发送数据的通道由 GC 代劳关闭（在接收端关闭）
@@ -280,7 +263,7 @@ func closechan(c *hchan) {...}
 
 <br>
 
-### 4. 其他补充
+## 5. 其他补充
 
 **值的复制**：接收和发送数据的本质，都是**值的复制**，而非地址操作
 
