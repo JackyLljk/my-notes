@@ -2,14 +2,14 @@
 >
 > 不要通过共享内存来通信，而要通过通信来实现共享内存
 
-## 1. CSP 模型
+## 1. CSP 模型（并发模型）
 
 **CSP**：Communicating Sequential Processes，通信顺序进程
 
 - 是一种用于描述两个独立的并发实体，通过共享的通讯管道进行通信的并发模型
 
 - 重视`input`和`output`，尤其重视并发编程
-- Go 实现了CSP模型，使用`goroutine`作为并发实体，使用`channel`通讯实现实体之间的数据共享
+- Go 实现了CSP 模型，使用`goroutine`作为并发实体，使用`channel`通讯实现实体之间的数据共享
 
 <br>
 

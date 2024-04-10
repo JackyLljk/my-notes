@@ -62,11 +62,45 @@ set := make(map[string]struct{})
 
 <br>
 
+### 6. 闭包
+
+**闭包 = 函数 + 引用环境**：一个闭包继承了函数声明时的作用域，Go 中所有匿名函数都是闭包
+
+```go
+func Func1() func(int) int {
+    // 引用的 Func1 的局部作用域环境
+    var x int
+    
+    // 函数类型
+    return func(delta int) int {
+        fmt.Println(x)
+        x += delta
+        return x
+    }
+}
+
+func main() {
+    var a = Func1()
+    var b = Func1()
+    
+    fmt.Println(a(1))	// 1
+    fmt.Println(a(10))	// 11
+    fmt.Println(b(1))	// 1
+    fmt.Println(b(10))	// 11
+}
+```
+
+- 闭包捕获的变量和常量是引用传递，不是值传递
+- 闭包在运行时可以有多个实例，实例之间互不影响，实例内部的变量是同一个地址（引用）
+
+<br>
+
 ## Tips
 
 1. 不能给内置类型和接口定义方法
 2. Go 不允许隐式类型转换，`=`两边类型必须相同
 3. Go 中所有类型都”实现了“空接口，空接口没有定义任何函数
+4. 无论业务大小，并发量多少，都应该选择流式`io.Copy`，而不是一次性读出来`ReadAll`
 
 
 
