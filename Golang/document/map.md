@@ -433,13 +433,36 @@ type hiter struct {
 
 ### Q1. map 中的 key 为什么是无序的
 
+1. 遍历 map 每次都是从一个随机序号的 bucket 开始，并从桶的一个随机的 cell 开始，写死的 map 遍历返回的 key 也是无序的
+2. 如果 map 处于扩容搬迁的中间态，遍历可能得到 oldbucket、newbucket X part、newbucket Y part 的键，自然是无序的
 
+<br>
 
 ### Q2. map 是线程安全的吗
 
+在查找、赋值、遍历、删除过程都会检测写标志，一旦发现写位置为 1，会直接引发 panic
 
+其中赋值、删除过程会修改标志位`flags`，并在完成操作后置零
 
-### Q3. map 读取的两种操作
+所以 map 无法并发读，也无法并发读写
+
+<br>
+
+### Q3. 比较两个 map
+
+如果直接使用`map1 == map2`是错误的，相等只能用于判断`map1 == nil`
+
+可以使用`reflect.DeepEqual()`比较两个 map，满足以下条件时两个 map 相等：
+
+1. 都为  nil
+2. 非空、长度相等，指向同一个`hmap`实体
+3. 相应的 key 指向的 value “深度”相等
+
+<br>
+
+## 参考
+
+[《Go 程序员面试宝典》- 散列表 map](https://book.douban.com/subject/35871233/)
 
 
 
