@@ -122,16 +122,36 @@ git diff	# 比较暂存区与工作区文件的差异
 ```bash
 git add .	# 添加所有文件 -> 暂存区
 
-git add -p	# 
+git add -p	# 提交，并处理每个变化
 
 git commit -m "注释内容"	# 暂存区 -> 本地仓库
 
 git push [url]	# 本地仓库 -> 远程仓库
 ```
 
-<br>
+#### 远程同步
 
+```bash
+git fetch [url]	# 下载远程仓库所有变动
 
+git remote -v	# 显示所有远程仓库
+
+git pull [url] [branch]	# 取回远程仓库的变化，并与本地分支合并
+
+git push [url] [branch]
+
+git push [url] --force
+
+git push [url] --all
+```
+
+#### 撤销
+
+```bash
+git checkout [filename]	# 暂存区 -> 工作区
+
+git reset [filename]	# 重置暂存区，与上一次commit保持一致，工作区不变
+```
 
 <br>
 
@@ -152,6 +172,30 @@ git branch -d [branch-name]	# 删除分支
 
 git push origin --delete [branch-name]	# 删除远程分支
 ```
+
+#### 分支合并
+
+```bash
+git checkout master # 切换到master分支
+
+git pull origin master
+
+git merge dev	# 把dev分支合并到master上
+```
+
+#### 分支变基
+
+```bash
+git checkout dev
+
+git rebase master
+```
+
+https://blog.csdn.net/weixin_42310154/article/details/119004977
+
+#### fork
+
+[参考 GitHub fork 操作](https://www.cnblogs.com/lvhuayan/p/14532886.html)
 
 <br>
 
@@ -175,7 +219,11 @@ doc/*.txt    # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 
 
 
+## 参考
 
+[git 文档](https://git-scm.com/docs)
+
+[阮一峰 - 常用 Git 命令清单](https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
 
 
 

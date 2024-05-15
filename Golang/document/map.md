@@ -155,6 +155,10 @@ value, ok := map1[key]	// ok == false, value 是零值（没找到）
 
 ### 1.5 删除过程
 
+```go
+delete(map, key)	// 删除哈希表 map 中的元素
+```
+
 删除操作调用的底层函数是`mapdelete`，同样根据 key 的类型会优化成更具体的函数
 
 1. 检查`flags`标志位，如果写位置为 1，则**直接 panic**
