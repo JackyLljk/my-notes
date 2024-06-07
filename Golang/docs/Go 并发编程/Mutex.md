@@ -112,6 +112,18 @@ go build -race -gcflags=-S counter.go 1> race.txt 2>&1
 
 ## 2. Mutex 实现
 
+![image-20240516125256157](../../../static/image-20240516125256157.png)
+
+**初版**：使用`flag`表示锁是否被持有
+
+**给新人机会**：使新的 goroutine 尽可能地先获取到锁
+
+**多给些机会**：照顾新来的和被唤醒的 goroutine（存在饥饿问题）
+
+**解决饥饿**：不会让 goroutine 长久等待
+
+<br>
+
 ### 2.1 CAS 操作
 
 `CAS`：将一个给定的期望值和一个内存地址中的值进行比较，如果是同一个值，就用新值替换内存中的值
@@ -133,9 +145,98 @@ go build -race -gcflags=-S counter.go 1> race.txt 2>&1
 
 ### 2.2 第一版互斥锁
 
+```go
+// CAS 操作（当时还没有抽象出 atomic 包）
+func cas(val *int32, old, new int32) bool
+
+// 使用信号量休眠
+func semacquire(*int32)	
+
+// 使用信号量唤醒
+func semrelease(*int32)
+```
+
+#### 结构体
+
+```go
+// 互斥锁的结构，包含两个字段
+type Mutex struct {
+    key  int32 // 锁是否被持有的标识
+    sema int32 // 信号量专用，用以阻塞/唤醒goroutine
+}
+```
+
+- `key >= 1`：表示锁已经被持有
+- `key `标识了锁是否被持有，也记录了当前持有和等待过去锁的 goroutine 的数量
+
+#### 操作
+
+```go
+// 保证成功在 val 上增加 delta 的值
+func xadd(val *int32, delta int32) (new int32) {
+    // 循环执行CAS操作直到成功
+    for {
+        v := *val	// CAS 保证这一步和下一步之间没有其他线程修改 key 的值
+        if cas(val, v, v+delta) {
+            return v + delta
+        }
+    }
+    panic("unreached")
+}
+
+// 请求锁
+func (m *Mutex) Lock() {
+    // 标识加 1，如果等于 1，成功获取到锁（key == 0 时执行，获取锁，key变为1）
+    if xadd(&m.key, 1) == 1 { 
+        return
+    }
+    semacquire(&m.sema) // key >= 1，阻塞等待
+}
+
+// 释放锁
+func (m *Mutex) Unlock() {
+    if xadd(&m.key, -1) == 0 { // 将标识减去 1，如果等于 0，则没有其它等待者
+        return
+    }
+    // key - 1 > 0，有其他阻塞的 goroutine，唤醒其中的一个
+    // 被唤醒的 goroutine 退出 semacquire(&m.sema)，Lock() 操作成功，获取到锁
+    semrelease(&m.sema) 
+}    
+```
+
+**谁申请，谁释放**：`Unlock` 方法可以被任意 goroutine 调用释放锁，即使该 goroutine 没有持有这个互斥锁，因为 Mutex 本身并未包含持有这把锁的 goroutine 信息，`Unlock` 方法自然不会对此做检查（该设计保留至今）
+
+- 存在的问题：其他 goroutine 可以强制释放锁，且临界区的 goroutine 不知道锁已经被释放了，还在执行临界区的业务操作，可能会导致 data race 问题
+- 在使用互斥锁时，一般在同一个方法中获取锁和释放锁
+
+```go
+// 使用 defer 语句特性，成对使用 Lock/Unlock
+mu.Lock()
+defer mu.Unlock()
+```
+
+**初版实现问题**：请求锁的 goroutine 会排队等待获取互斥锁，从性能角度考虑，更好的实现方式是把锁交给正在占用 CPU 时间片的 goroutine，从而在高并发环境下节省上下文切换带来的开销（占用 CPU 时间片的进程就是持有锁的进程）
+
+<br>
+
+### 2.3 给新人机会
+
+```go
+type Mutex struct {
+    state int32
+    sema  uint32
+}
+```
 
 
 
+```go
+const (
+    mutexLocked = 1 << iota // mutex is locked
+    mutexWoken
+    mutexWaiterShift = iota
+)
+```
 
 
 

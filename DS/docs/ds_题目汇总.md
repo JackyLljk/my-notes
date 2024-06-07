@@ -1,5 +1,45 @@
 > Leetcode 题源：hot100，剑指offer，代码随想录，Acwing
 
+## 1. 数组
+
+### 1.1 二分查找
+
+[标准模板](./二分法.md)
+
+[704. 二分查找](https://leetcode.cn/problems/binary-search/)
+
+
+
+### 1.2 双指针
+
+[标准模板](./双指针 | 滑动窗口.md)
+
+[26. 删除有序数组中的重复项](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/)【++】
+
+[27. 移除元素](https://leetcode.cn/problems/remove-element/)【++】
+
+[283. 移动零](https://leetcode.cn/problems/move-zeroes/)【+++】【hot100】
+
+[844. 比较含退格的字符串](https://leetcode.cn/problems/backspace-string-compare/)【++】（思考原地算法）
+
+[977. 有序数组的平方](https://leetcode.cn/problems/squares-of-a-sorted-array/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 1. 树
 
 参考：[代码随想录 - 二叉树](https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE)（剩余25/29/30/31/33）
@@ -160,8 +200,6 @@ void trace() {
 [695. 岛屿的最大面积](https://leetcode.cn/problems/max-area-of-island/)【++】
 
 [1905. 统计子岛屿](https://leetcode.cn/problems/count-sub-islands/)【+++】
-
-
 
 <br>
 
