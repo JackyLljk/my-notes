@@ -1,42 +1,27 @@
 ## 0. 课程简介
 
-### **Go 语言核心优势**
+### Go 语言核心优势
 
 1. 语言简单
 2. 语言层面支持并发编程
 3. 跨平台编译
 4. 自带垃圾回收机制
 
-
-
-#### **Go 项目开发面临的问题**
-
-1. 知识盲区
-2. 学不到最佳实践，能力提升有限
-3. 不知道如何完整地开发一个 Go 项目
-4. 缺乏一线项目练手，很难检验学习效果
+**学习项目的方式**：修改代码、运行验证（跑起来，运行输出）
 
 
 
-**学习项目的方式**：修改代码、运行验证
-
-
-
-### IAM 项目技术栈
+### 项目技术栈
 
 **开发**
 
-- gin 框架
-- JWT
-- GORM
-- MongoDB
-- Redis
-- MySQL（MariaDB）
-- gRPC
-- zap
-- viper
-- pflag
-- cobra
+- Web 框架：gin
+- 认证：Basic、JWT
+- CRUD：GORM
+- 数据库：MongoDB、Redis、MySQL（MariaDB）
+- API：gRPC、HTTP（RESTful）
+- 日志：zap
+- 应用构建：viper、pflag、cobra
 - 分布式作业系统
 
 **测试**
@@ -50,6 +35,38 @@
 - CI/CD
 - Makefile
 - Swagger API doc
+
+
+
+### 学习内容
+
+- 设计模式：
+
+    - 单例模式
+
+    - 应用构建（选项模式）
+
+    - 控制流（抽象工厂模式/依赖注入）
+
+    - 认证（策略模式）
+
+- Web 框架：gin（需要补充细节）、RESTful API
+
+- 应用构建：viper、pflag、cobra
+
+- 认证 Auth：Basic、JWT
+
+- 授权 Authz：
+
+    
+
+    
+
+    
+
+
+
+
 
 <br>
 
@@ -116,13 +133,13 @@ ACL：访问控制列表（Access Control List）模型
 
 ### 1.3 IAM 系统架构
 
-![IAM架构](../../../../static/IAM%E6%9E%B6%E6%9E%84.png)
+![IAM架构](../../../../../static/IAM%E6%9E%B6%E6%9E%84.png)
 
 - 主要包括 9 大组件和 3 大数据库
 
-![img](../../../../static/6cdbde36255c7fb2d4f2e718c9077a71.jpeg)
+![img](../../../../../static/6cdbde36255c7fb2d4f2e718c9077a71.jpeg)
 
-![img](../../../../static/e68c21e1991c74becc4b8a6a8bf5a8f2.jpeg)
+![img](../../../../../static/e68c21e1991c74becc4b8a6a8bf5a8f2.jpeg)
 
 <br>
 
@@ -172,7 +189,7 @@ ACL：访问控制列表（Access Control List）模型
 
 - 前后端通过 RESTful API 通信
 
-![img](../../../../static/a2e1f1cc135debd86611yya1f221c476.jpg)
+![img](../../../../../static/a2e1f1cc135debd86611yya1f221c476.jpg)
 
 - 通过前端请求 `ops-webconsole` 时：
     - `ops-webconsole` 先请求静态文件服务器加载静态文件（HTML、CSS、JS）
@@ -193,7 +210,7 @@ ACL：访问控制列表（Access Control List）模型
 
 - 当系统功能较少，可以采用 MVC 架构，节省沟通成本和前后端交互逻辑的开发
 
-<img src="../../../../static/a23b8ba92705710c694fd7cb99812feb.jpg" alt="img" style="zoom: 33%;" />
+<img src="../../../../../static/a23b8ba92705710c694fd7cb99812feb.jpg" alt="img" style="zoom: 33%;" />
 
 MVC（Model View Controller）
 
@@ -217,7 +234,7 @@ MVC（Model View Controller）
 
 <br>
 
-![img](../../../../static/7688d7cdf5050dc3f3f839150b5e2723.jpg)
+![img](../../../../../static/7688d7cdf5050dc3f3f839150b5e2723.jpg)
 
 
 

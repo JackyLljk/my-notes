@@ -1,4 +1,4 @@
-> Leetcode 题源：hot100，剑指offer，代码随想录，Acwing
+> Leetcode 题源：[hot100](https://leetcode.cn/studyplan/top-100-liked/)，[剑指offer](https://leetcode.cn/search/?q=lcr)，[代码随想录](https://programmercarl.com/)，[Acwing](https://www.acwing.com/problem/)，[CodeTop](https://codetop.cc/home)
 
 ## 1. 数组
 
@@ -7,8 +7,6 @@
 [标准模板](./二分法.md)
 
 [704. 二分查找](https://leetcode.cn/problems/binary-search/)
-
-
 
 ### 1.2 双指针
 
@@ -22,19 +20,57 @@
 
 [844. 比较含退格的字符串](https://leetcode.cn/problems/backspace-string-compare/)【++】（思考原地算法）
 
-[977. 有序数组的平方](https://leetcode.cn/problems/squares-of-a-sorted-array/)
+[977. 有序数组的平方](https://leetcode.cn/problems/squares-of-a-sorted-array/)【+】
+
+[209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+
+[904. 水果成篮](https://leetcode.cn/problems/fruit-into-baskets/)
+
+[LCR 007. 三数之和](https://leetcode.cn/problems/1fGaJU/)【++++】
+
+[18. 四数之和](https://leetcode.cn/problems/4sum/)【+++】
+
+### 1.3 滑动窗口（子串/子序列）
+
+[904. 水果成篮](https://leetcode.cn/problems/fruit-into-baskets/)【+】
+
+[76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/)【+++】
+
+[567. 字符串的排列](https://leetcode.cn/problems/permutation-in-string/)【+++】
+
+[438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)【+++】
+
+[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)【+++】
+
+### 1.4 二维数组
+
+[54. 螺旋矩阵](https://leetcode.cn/problems/spiral-matrix/) | [LCR 146. 螺旋遍历二维数组](https://leetcode.cn/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)【+++】
+
+[59. 螺旋矩阵 II](https://leetcode.cn/problems/spiral-matrix-ii/)
 
 
 
+## 2. 链表
+
+[203. 移除链表元素](https://leetcode.cn/problems/remove-linked-list-elements/)
+
+[707. 设计链表](https://leetcode.cn/problems/design-linked-list/)【++】
+
+[206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
+
+[92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)
+
+[25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)【+++】
+
+[24. 两两交换链表中的节点](https://leetcode.cn/problems/swap-nodes-in-pairs/)
+
+[19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 
 
 
+## 3. 哈希表
 
-
-
-
-
-
+[454. 四数相加 II](https://leetcode.cn/problems/4sum-ii/)【++】
 
 
 
@@ -235,17 +271,9 @@ void trace() {
 
 <br>
 
-## 4. 子串/子序列
 
-### 4.1 滑动窗口
 
-[76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/)【+++】
 
-[567. 字符串的排列](https://leetcode.cn/problems/permutation-in-string/)【+++】
-
-[438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)【+++】
-
-[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)【+++】
 
 
 
