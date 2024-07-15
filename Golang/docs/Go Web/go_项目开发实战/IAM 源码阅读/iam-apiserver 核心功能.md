@@ -84,7 +84,12 @@ func main() {
 
 #### iam-apiserver 优雅关停实现
 
+**step1.**  创建 channel 用来接收 `os.Interrupt`（SIGINT）和 `syscall.SIGTERM`（SIGKILL）信号
 
+```go
+// iam/internal/pkg/server/signal.go
+
+```
 
 
 
